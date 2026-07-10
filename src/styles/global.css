@@ -5,13 +5,14 @@
  */
 
 :root {
-	--accent: #6b7a5e;
-	--accent-dark: #4d5943;
-	--black: 36, 38, 32;
-	--gray: 122, 128, 110;
-	--gray-light: 236, 234, 226;
-	--gray-dark: 58, 61, 52;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fdfcf9;
+	--accent: #b26a3a;
+	--accent-dark: #8a4f26;
+	--gold: #c9a227;
+	--black: 42, 34, 26;
+	--gray: 140, 118, 98;
+	--gray-light: 238, 227, 210;
+	--gray-dark: 64, 50, 40;
+	--gray-gradient: rgba(var(--gray-light), 50%), #fdf8f0;
 	--box-shadow:
 		0 2px 6px rgba(var(--gray), 12%), 0 8px 24px rgba(var(--gray), 12%),
 		0 16px 32px rgba(var(--gray), 12%);
@@ -35,7 +36,7 @@ body {
 	margin: 0;
 	padding: 0;
 	text-align: left;
-	background: #fdfcf9;
+	background: #fdf8f0;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
@@ -69,16 +70,16 @@ main {
 }
 .btn:hover {
 	background: var(--accent);
-	color: #fdfcf9;
+	color: #fdf8f0;
 }
 .btn.btn-solid {
 	background: var(--accent);
-	color: #fdfcf9;
+	color: #fdf8f0;
 }
 .btn.btn-solid:hover {
 	background: var(--accent-dark);
 	border-color: var(--accent-dark);
-	color: #fdfcf9;
+	color: #fdf8f0;
 }
 .card {
 	background: #fff;
