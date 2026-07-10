@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { WEDDING_DATE_LABEL, WEDDING_VENUE } from '../consts';
+
+const schedule = [
+	{ time: '14:00', title: 'Ceremonie', description: `De plechtigheid vindt plaats in ${WEDDING_VENUE}.` },
+	{ time: '15:00', title: 'Receptie', description: 'Tijd om te proosten en de eerste felicitaties in ontvangst te nemen.' },
+	{ time: '18:30', title: 'Diner', description: 'We schuiven samen aan tafel voor het feestmaal.' },
+	{ time: '21:00', title: 'Feest', description: 'De dansvloer gaat open — tot in de late uurtjes!' },
+];
+---
+
+<Layout title="Programma" description={`Het programma van onze bruiloft op ${WEDDING_DATE_LABEL}.`}>
+	<span class="eyebrow">{WEDDING_DATE_LABEL}</span>
+	<h1>Programma</h1>
+	<p>
+		Hier vind je een overzicht van de dag. Kom op tijd, we willen niets missen! Alle onderdelen
+		vinden plaats in en rond {WEDDING_VENUE}.
+	</p>
+
+	<ol class="timeline">
+		{
+			schedule.map((item) => (
+				<li class="card timeline-item">
+					<div class="timeline-time">{item.time}</div>
+					<div>
+						<h3>{item.title}</h3>
+						<p>{item.description}</p>
+					</div>
+				</li>
+			))
+		}
+	</ol>
+</Layout>
+
+<style>
+	.timeline {
+		list-style: none;
+		margin: 2em 0 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1em;
+	}
+	.timeline-item {
+		display: flex;
+		gap: 1.25em;
+		align-items: baseline;
+	}
+	.timeline-time {
+		flex: none;
+		width: 4.5em;
+		font-weight: 700;
+		color: var(--accent);
+		font-size: 1.1em;
+	}
+	.timeline-item h3 {
+		margin-bottom: 0.2em;
+	}
+	.timeline-item p {
+		margin-bottom: 0;
+		color: rgb(var(--gray-dark));
+	}
+	@media (max-width: 480px) {
+		.timeline-item {
+			flex-direction: column;
+			gap: 0.25em;
+		}
+	}
+</style>

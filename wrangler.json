@@ -1,5 +1,5 @@
 {
-	"name": "astro-blog-starter-template",
+	"name": "kirsten-en-thibaut-website",
 	"compatibility_date": "2025-10-08",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "./dist/_worker.js/index.js",
@@ -10,5 +10,12 @@
 	"observability": {
 		"enabled": true
 	},
-	"upload_source_maps": true
+	"upload_source_maps": true,
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "kirsten-en-thibaut-rsvp",
+			"database_id": "REPLACE_WITH_YOUR_DATABASE_ID"
+		}
+	]
 }

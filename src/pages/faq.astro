@@ -1,0 +1,68 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { CONTACT_EMAIL, RSVP_DEADLINE_LABEL, WEDDING_VENUE } from '../consts';
+
+const faqs = [
+	{
+		question: 'Wat is de dresscode?',
+		answer: 'Chic. Denk aan een outfit die past bij een feestelijke gelegenheid — geen jeans of sportschoenen graag.',
+	},
+	{
+		question: 'Mogen we kinderen meebrengen?',
+		answer: `We houden het feest liever voor volwassenen, met uitzondering van kinderen die we zelf uitnodigen. Laat het ons weten als je hier vragen over hebt via ${CONTACT_EMAIL}.`,
+	},
+	{
+		question: 'Is er parking voorzien?',
+		answer: `Ja, er is voldoende parkeergelegenheid bij ${WEDDING_VENUE}.`,
+	},
+	{
+		question: 'Hebben jullie een cadeaulijst?',
+		answer: 'Jullie aanwezigheid is het mooiste cadeau. Wil je toch iets geven, een bijdrage in een envelop stellen we erg op prijs.',
+	},
+	{
+		question: 'Ik heb een allergie of dieetwens, wat nu?',
+		answer: 'Geef dit gerust door via het RSVP-formulier, dan houden we hier rekening mee.',
+	},
+	{
+		question: 'Tot wanneer kunnen we reageren?',
+		answer: `Gelieve te antwoorden voor ${RSVP_DEADLINE_LABEL}, zodat we alles op tijd kunnen regelen.`,
+	},
+	{
+		question: 'Met wie kunnen we contact opnemen bij vragen?',
+		answer: `Stuur gerust een mail naar ${CONTACT_EMAIL}, we helpen je graag verder.`,
+	},
+];
+---
+
+<Layout title="FAQ" description="Veelgestelde vragen over onze bruiloft.">
+	<span class="eyebrow">Veelgestelde vragen</span>
+	<h1>FAQ</h1>
+
+	<dl class="faq-list">
+		{
+			faqs.map((faq) => (
+				<div class="card faq-item">
+					<dt>{faq.question}</dt>
+					<dd>{faq.answer}</dd>
+				</div>
+			))
+		}
+	</dl>
+</Layout>
+
+<style>
+	.faq-list {
+		margin: 2em 0 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1em;
+	}
+	.faq-item dt {
+		font-weight: 700;
+		margin-bottom: 0.4em;
+	}
+	.faq-item dd {
+		margin: 0;
+		color: rgb(var(--gray-dark));
+	}
+</style>

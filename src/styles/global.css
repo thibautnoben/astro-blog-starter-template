@@ -5,16 +5,16 @@
  */
 
 :root {
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
-	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
+	--accent: #6b7a5e;
+	--accent-dark: #4d5943;
+	--black: 36, 38, 32;
+	--gray: 122, 128, 110;
+	--gray-light: 236, 234, 226;
+	--gray-dark: 58, 61, 52;
+	--gray-gradient: rgba(var(--gray-light), 50%), #fdfcf9;
 	--box-shadow:
-		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-		0 16px 32px rgba(var(--gray), 33%);
+		0 2px 6px rgba(var(--gray), 12%), 0 8px 24px rgba(var(--gray), 12%),
+		0 16px 32px rgba(var(--gray), 12%);
 }
 @font-face {
 	font-family: "Atkinson";
@@ -35,8 +35,7 @@ body {
 	margin: 0;
 	padding: 0;
 	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
-	background-size: 100% 600px;
+	background: #fdfcf9;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
@@ -48,6 +47,44 @@ main {
 	max-width: calc(100% - 2em);
 	margin: auto;
 	padding: 3em 1em;
+}
+.eyebrow {
+	display: block;
+	font-size: 0.9rem;
+	font-weight: 700;
+	letter-spacing: 0.25em;
+	text-transform: uppercase;
+	color: var(--accent);
+	margin-bottom: 0.75em;
+}
+.btn {
+	display: inline-block;
+	padding: 0.75em 1.75em;
+	border-radius: 999px;
+	border: 2px solid var(--accent);
+	color: var(--accent);
+	text-decoration: none;
+	font-weight: 700;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+.btn:hover {
+	background: var(--accent);
+	color: #fdfcf9;
+}
+.btn.btn-solid {
+	background: var(--accent);
+	color: #fdfcf9;
+}
+.btn.btn-solid:hover {
+	background: var(--accent-dark);
+	border-color: var(--accent-dark);
+	color: #fdfcf9;
+}
+.card {
+	background: #fff;
+	border: 1px solid rgb(var(--gray-light));
+	border-radius: 12px;
+	padding: 1.5em;
 }
 h1,
 h2,

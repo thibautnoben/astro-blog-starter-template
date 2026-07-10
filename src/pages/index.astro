@@ -1,50 +1,126 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import Layout from '../layouts/Layout.astro';
+import {
+	PARTNER_ONE,
+	PARTNER_TWO,
+	SITE_DESCRIPTION,
+	WEDDING_DATE,
+	WEDDING_DATE_LABEL,
+	WEDDING_VENUE,
+} from '../consts';
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, World!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<Layout title={`${PARTNER_ONE} & ${PARTNER_TWO}`} description={SITE_DESCRIPTION}>
+	<section class="hero">
+		<span class="eyebrow">Wij trouwen</span>
+		<h1>{PARTNER_ONE} & {PARTNER_TWO}</h1>
+		<p class="date-venue">{WEDDING_DATE_LABEL} — {WEDDING_VENUE}</p>
+		<p>
+			Na jaren samen zetten we de volgende stap. We nodigen je van harte uit om deze dag samen met
+			ons te vieren.
+		</p>
+		<div class="cta">
+			<a class="btn btn-solid" href="/rsvp">RSVP</a>
+			<a class="btn" href="/programma">Bekijk het programma</a>
+		</div>
+	</section>
+
+	<section class="countdown" data-wedding-date={WEDDING_DATE.toISOString()}>
+		<div class="countdown-item">
+			<span class="countdown-value" data-unit="days">–</span>
+			<span class="countdown-label">dagen</span>
+		</div>
+		<div class="countdown-item">
+			<span class="countdown-value" data-unit="hours">–</span>
+			<span class="countdown-label">uren</span>
+		</div>
+		<div class="countdown-item">
+			<span class="countdown-value" data-unit="minutes">–</span>
+			<span class="countdown-label">minuten</span>
+		</div>
+		<div class="countdown-item">
+			<span class="countdown-value" data-unit="seconds">–</span>
+			<span class="countdown-label">seconden</span>
+		</div>
+	</section>
+</Layout>
+
+<script>
+	function updateCountdown() {
+		const section = document.querySelector('.countdown');
+		if (!(section instanceof HTMLElement)) return;
+		const target = new Date(section.dataset.weddingDate ?? '').getTime();
+		const diff = Math.max(0, target - Date.now());
+
+		const seconds = Math.floor(diff / 1000);
+		const values = {
+			days: Math.floor(seconds / 86400),
+			hours: Math.floor((seconds % 86400) / 3600),
+			minutes: Math.floor((seconds % 3600) / 60),
+			seconds: seconds % 60,
+		};
+
+		for (const [unit, value] of Object.entries(values)) {
+			const el = section.querySelector(`[data-unit="${unit}"]`);
+			if (el) el.textContent = String(value).padStart(2, '0');
+		}
+	}
+
+	updateCountdown();
+	setInterval(updateCountdown, 1000);
+</script>
+
+<style>
+	.hero {
+		text-align: center;
+		padding: 2em 0 3em;
+	}
+	.hero h1 {
+		font-size: 3.5em;
+		margin-bottom: 0.2em;
+	}
+	.date-venue {
+		font-size: 1.25em;
+		color: rgb(var(--gray));
+		margin-bottom: 1.5em;
+	}
+	.cta {
+		display: flex;
+		gap: 1em;
+		justify-content: center;
+		flex-wrap: wrap;
+		margin-top: 1.5em;
+	}
+	.countdown {
+		display: flex;
+		justify-content: center;
+		gap: 1.5em;
+		flex-wrap: wrap;
+		padding: 2em 0 3em;
+		border-top: 1px solid rgb(var(--gray-light));
+	}
+	.countdown-item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		min-width: 4.5em;
+	}
+	.countdown-value {
+		font-size: 2.5em;
+		font-weight: 700;
+		color: var(--accent);
+		line-height: 1;
+	}
+	.countdown-label {
+		margin-top: 0.4em;
+		font-size: 0.85em;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: rgb(var(--gray));
+	}
+	@media (max-width: 480px) {
+		.hero h1 {
+			font-size: 2.5em;
+		}
+	}
+</style>

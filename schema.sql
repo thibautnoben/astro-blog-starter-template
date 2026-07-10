@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS rsvps (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	naam TEXT NOT NULL,
+	email TEXT,
+	aanwezig TEXT NOT NULL,
+	aantal_gasten INTEGER NOT NULL DEFAULT 1,
+	dieetwensen TEXT,
+	bericht TEXT,
+	created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
