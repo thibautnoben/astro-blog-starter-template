@@ -6,20 +6,45 @@ import { PARTNER_ONE, PARTNER_TWO } from '../consts';
 <header>
 	<nav>
 		<h2><a href="/">{PARTNER_ONE} & {PARTNER_TWO}</a></h2>
-		<div class="internal-links">
+		<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
+		<div class="internal-links" id="nav-links">
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/programma">Programma</HeaderLink>
+			<HeaderLink href="/fotos">Foto's</HeaderLink>
 			<HeaderLink href="/rsvp">RSVP</HeaderLink>
 			<HeaderLink href="/faq">FAQ</HeaderLink>
 		</div>
 	</nav>
 </header>
+
+<script>
+	const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+	const links = document.getElementById('nav-links');
+
+	toggle?.addEventListener('click', () => {
+		const isOpen = links?.classList.toggle('open') ?? false;
+		toggle.setAttribute('aria-expanded', String(isOpen));
+	});
+
+	links?.querySelectorAll('a').forEach((link) => {
+		link.addEventListener('click', () => {
+			links.classList.remove('open');
+			toggle?.setAttribute('aria-expanded', 'false');
+		});
+	});
+</script>
+
 <style>
 	header {
 		margin: 0;
 		padding: 0 1em;
 		background: #fdf8f0;
 		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+		position: relative;
 	}
 	h2 {
 		margin: 0;
@@ -45,5 +70,64 @@ import { PARTNER_ONE, PARTNER_TWO } from '../consts';
 	nav a.active {
 		text-decoration: none;
 		border-bottom-color: var(--accent);
+	}
+	.internal-links {
+		display: flex;
+	}
+	.nav-toggle {
+		display: none;
+		flex-direction: column;
+		justify-content: center;
+		gap: 5px;
+		width: 44px;
+		height: 44px;
+		padding: 0;
+		border: none;
+		background: transparent;
+		cursor: pointer;
+	}
+	.nav-toggle span {
+		display: block;
+		width: 24px;
+		height: 2px;
+		margin: 0 auto;
+		background: rgb(var(--black));
+		transition: transform 0.2s ease, opacity 0.2s ease;
+	}
+	.nav-toggle[aria-expanded='true'] span:nth-child(1) {
+		transform: translateY(7px) rotate(45deg);
+	}
+	.nav-toggle[aria-expanded='true'] span:nth-child(2) {
+		opacity: 0;
+	}
+	.nav-toggle[aria-expanded='true'] span:nth-child(3) {
+		transform: translateY(-7px) rotate(-45deg);
+	}
+
+	@media (max-width: 640px) {
+		.nav-toggle {
+			display: flex;
+		}
+		.internal-links {
+			display: none;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			flex-direction: column;
+			background: #fdf8f0;
+			box-shadow: 0 8px 16px rgba(var(--black), 8%);
+		}
+		.internal-links.open {
+			display: flex;
+		}
+		.internal-links a {
+			padding: 1em;
+			border-bottom: 1px solid rgba(var(--gray-light), 100%);
+		}
+		.internal-links a.active {
+			border-bottom: 1px solid rgba(var(--gray-light), 100%);
+			background: rgba(var(--gray-light), 40%);
+		}
 	}
 </style>

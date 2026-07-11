@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+
+const photos = Object.values(
+	import.meta.glob('../assets/images/gallery/*.{jpg,jpeg,png}', {
+		eager: true,
+		import: 'default',
+	}),
+);
+---
+
+<div class="gallery">
+	{
+		photos.map((photo) => (
+			<Image src={photo} alt="" widths={[300, 600, 900]} sizes="(min-width: 720px) 340px, 45vw" />
+		))
+	}
+</div>
+
+<style>
+	.gallery {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 0.75em;
+	}
+	.gallery :global(img) {
+		display: block;
+		width: 100%;
+		aspect-ratio: 1 / 1;
+		object-fit: cover;
+		border-radius: 8px;
+	}
+</style>
