@@ -1,8 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { WEDDING_DATE_LABEL, WEDDING_VENUE } from '../consts';
+import { WEDDING_CITY_HALL, WEDDING_DATE_LABEL, WEDDING_VENUE } from '../consts';
 
 const schedule = [
+	{
+		time: '12:00',
+		title: 'Burgerlijk huwelijk',
+		description: `We geven elkaar het jawoord in ${WEDDING_CITY_HALL}.`,
+	},
 	{ time: '14:00', title: 'Ceremonie', description: `De plechtigheid vindt plaats in ${WEDDING_VENUE}.` },
 	{ time: '15:00', title: 'Receptie', description: 'Tijd om te proosten en de eerste felicitaties in ontvangst te nemen.' },
 	{ time: '18:30', title: 'Diner', description: 'We schuiven samen aan tafel voor het feestmaal.' },
@@ -14,8 +19,9 @@ const schedule = [
 	<span class="eyebrow">{WEDDING_DATE_LABEL}</span>
 	<h1>Programma</h1>
 	<p>
-		Hier vind je een overzicht van de dag. Kom op tijd, we willen niets missen! Alle onderdelen
-		vinden plaats in en rond {WEDDING_VENUE}.
+		Hier vind je een overzicht van de dag. Om 12:00 geven we elkaar het jawoord in {WEDDING_CITY_HALL}.
+		Aansluitend verwelkomen we iedereen in {WEDDING_VENUE} voor de ceremonie, receptie, diner en het
+		feest.
 	</p>
 
 	<ol class="timeline">
