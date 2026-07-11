@@ -1,4 +1,4 @@
----
+b---
 export const prerender = false;
 
 import Layout from '../layouts/Layout.astro';
@@ -35,8 +35,8 @@ const status = Astro.url.searchParams.get('status');
 		</div>
 
 		<div class="field">
-			<label for="email">E-mail</label>
-			<input type="email" id="email" name="email" />
+			<label for="email">E-mail*</label>
+			<input type="email" id="email" name="email" required />
 		</div>
 
 		<fieldset class="field">
