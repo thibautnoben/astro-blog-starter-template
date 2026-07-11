@@ -66,11 +66,20 @@ export const POST: APIRoute = async ({ request, redirect, locals }) => {
 		return redirect('/rsvp?status=error');
 	}
 
-	ctx.waitUntil(
-		sendConfirmationEmail(env.RESEND_API_KEY, email, { naam, aanwezig, aantalGasten }).catch((error) =>
-			console.error('Failed to send RSVP confirmation email', error),
-		),
-	);
+	if (!env.RESEND_API_KEY) {
+		console.error(
+			'RESEND_API_KEY is not set (or the binding name does not match) — skipping confirmation email',
+		);
+	} else {
+		console.log(
+			`Sending RSVP confirmation email using key starting with "${env.RESEND_API_KEY.slice(0, 6)}…" (length ${env.RESEND_API_KEY.length})`,
+		);
+		ctx.waitUntil(
+			sendConfirmationEmail(env.RESEND_API_KEY, email, { naam, aanwezig, aantalGasten }).catch((error) =>
+				console.error('Failed to send RSVP confirmation email', error),
+			),
+		);
+	}
 
 	return redirect('/rsvp?status=success');
 };
