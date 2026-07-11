@@ -18,7 +18,7 @@
 		"typescript": "5.9.3"
 	},
 	"devDependencies": {
-		"wrangler": "4.56.0"
+		"wrangler": "^4.110.0"
 	},
 	"engines": {
 		"node": ">=22"
