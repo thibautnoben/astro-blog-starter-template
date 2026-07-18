@@ -8,3 +8,5 @@ CREATE TABLE IF NOT EXISTS rsvps (
 	bericht TEXT,
 	created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_rsvps_email ON rsvps(email);

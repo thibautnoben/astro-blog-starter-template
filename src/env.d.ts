@@ -7,5 +7,7 @@ declare namespace App {
 declare namespace Cloudflare {
   interface Env {
     RESEND_API_KEY: string;
+    TURNSTILE_SITE_KEY: string;
+    TURNSTILE_SECRET_KEY: string;
   }
 }

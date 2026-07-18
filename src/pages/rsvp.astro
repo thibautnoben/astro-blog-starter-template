@@ -1,10 +1,11 @@
-b---
+---
 export const prerender = false;
 
 import Layout from '../layouts/Layout.astro';
 import { CONTACT_EMAIL, RSVP_DEADLINE_LABEL } from '../consts';
 
 const status = Astro.url.searchParams.get('status');
+const turnstileSiteKey = Astro.locals.runtime.env.TURNSTILE_SITE_KEY;
 ---
 
 <Layout title="RSVP" description={`Laat ons voor ${RSVP_DEADLINE_LABEL} weten of je erbij kan zijn.`}>
@@ -29,14 +30,19 @@ const status = Astro.url.searchParams.get('status');
 	}
 
 	<form class="card" method="POST" action="/api/rsvp">
+		<div class="field honeypot" aria-hidden="true">
+			<label for="website">Laat dit veld leeg</label>
+			<input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+		</div>
+
 		<div class="field">
 			<label for="naam">Naam*</label>
-			<input type="text" id="naam" name="naam" required />
+			<input type="text" id="naam" name="naam" required maxlength="100" />
 		</div>
 
 		<div class="field">
 			<label for="email">E-mail*</label>
-			<input type="email" id="email" name="email" required />
+			<input type="email" id="email" name="email" required maxlength="254" />
 		</div>
 
 		<fieldset class="field">
@@ -47,22 +53,26 @@ const status = Astro.url.searchParams.get('status');
 
 		<div class="field">
 			<label for="aantal_gasten">Aantal gasten (inclusief jezelf)</label>
-			<input type="number" id="aantal_gasten" name="aantal_gasten" min="1" value="1" />
+			<input type="number" id="aantal_gasten" name="aantal_gasten" min="1" max="20" value="1" />
 		</div>
 
 		<div class="field">
 			<label for="dieetwensen">Dieetwensen of allergieën</label>
-			<textarea id="dieetwensen" name="dieetwensen" rows="3"></textarea>
+			<textarea id="dieetwensen" name="dieetwensen" rows="3" maxlength="500"></textarea>
 		</div>
 
 		<div class="field">
 			<label for="bericht">Bericht voor het bruidspaar</label>
-			<textarea id="bericht" name="bericht" rows="3"></textarea>
+			<textarea id="bericht" name="bericht" rows="3" maxlength="1000"></textarea>
 		</div>
+
+		<div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
 
 		<button type="submit" class="btn btn-solid">Versturen</button>
 	</form>
 </Layout>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <style>
 	.notice {
@@ -90,6 +100,13 @@ const status = Astro.url.searchParams.get('status');
 		border: none;
 		padding: 0;
 		margin: 0;
+	}
+	.honeypot {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		left: -9999px;
 	}
 	.field legend {
 		font-weight: 700;
