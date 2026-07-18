@@ -20,20 +20,30 @@ function escapeHtml(value: string): string {
 function isSameOrigin(request: Request): boolean {
 	const siteOrigin = new URL(request.url).origin;
 	const origin = request.headers.get('origin');
-	if (origin) return origin === siteOrigin;
-
 	const referer = request.headers.get('referer');
-	if (referer) {
+
+	let ok: boolean;
+	if (origin) {
+		ok = origin === siteOrigin;
+	} else if (referer) {
 		try {
-			return new URL(referer).origin === siteOrigin;
+			ok = new URL(referer).origin === siteOrigin;
 		} catch {
-			return false;
+			ok = false;
 		}
+	} else {
+		// Neither header present (some privacy tools strip both) — allow rather than
+		// block legitimate submissions; the honeypot/validation checks still apply.
+		ok = true;
 	}
 
-	// Neither header present (some privacy tools strip both) — allow rather than
-	// block legitimate submissions; the honeypot/validation checks still apply.
-	return true;
+	if (!ok) {
+		console.error(
+			`isSameOrigin rejected request: siteOrigin=${siteOrigin}, origin header=${origin}, referer header=${referer}`,
+		);
+	}
+
+	return ok;
 }
 
 async function verifyTurnstile(secretKey: string, token: string, remoteIp: string | null): Promise<boolean> {
@@ -142,6 +152,7 @@ export const POST: APIRoute = async ({ request, redirect, locals }) => {
 	const bericht = String(formData.get('bericht') ?? '').trim().slice(0, 1000);
 
 	if (!naam || !email || !EMAIL_RE.test(email) || (aanwezig !== 'ja' && aanwezig !== 'nee')) {
+		console.error(`RSVP validation failed: naam=${JSON.stringify(naam)}, email=${JSON.stringify(email)}, aanwezig=${JSON.stringify(aanwezig)}`);
 		return redirect('/rsvp?status=error');
 	}
 
@@ -158,7 +169,8 @@ export const POST: APIRoute = async ({ request, redirect, locals }) => {
 		)
 			.bind(naam, email, aanwezig, aantalGasten, dieetwensen || null, bericht || null)
 			.run();
-	} catch {
+	} catch (error) {
+		console.error('RSVP database insert failed', error);
 		return redirect('/rsvp?status=error');
 	}
 
