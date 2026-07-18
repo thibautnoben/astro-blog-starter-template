@@ -37,7 +37,15 @@ function isSameOrigin(request: Request): boolean {
 }
 
 async function verifyTurnstile(secretKey: string, token: string, remoteIp: string | null): Promise<boolean> {
-	if (!token) return false;
+	if (!secretKey) {
+		console.error('TURNSTILE_SECRET_KEY is not set (or the binding name does not match) — rejecting submission');
+		return false;
+	}
+
+	if (!token) {
+		console.error('No cf-turnstile-response token submitted — rejecting submission');
+		return false;
+	}
 
 	const body = new URLSearchParams({ secret: secretKey, response: token });
 	if (remoteIp) body.set('remoteip', remoteIp);
@@ -48,9 +56,19 @@ async function verifyTurnstile(secretKey: string, token: string, remoteIp: strin
 		body,
 	});
 
-	if (!response.ok) return false;
+	if (!response.ok) {
+		console.error(`Turnstile siteverify HTTP error: ${response.status} ${await response.text()}`);
+		return false;
+	}
 
-	const result = await response.json<{ success: boolean }>();
+	const result = await response.json<{ success: boolean; 'error-codes'?: string[] }>();
+
+	if (!result.success) {
+		console.error(
+			`Turnstile verification failed: ${JSON.stringify(result['error-codes'])} (secret key starting with "${secretKey.slice(0, 6)}…", length ${secretKey.length})`,
+		);
+	}
+
 	return result.success;
 }
 
