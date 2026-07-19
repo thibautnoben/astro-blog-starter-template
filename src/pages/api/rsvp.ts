@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { env } from 'cloudflare:workers';
 import { CONTACT_EMAIL, PARTNER_ONE, PARTNER_TWO, WEDDING_DATE_LABEL, WEDDING_VENUE } from '../../consts';
 
 export const prerender = false;
@@ -132,8 +133,6 @@ export const POST: APIRoute = async ({ request, redirect, locals }) => {
 		return redirect('/rsvp?status=success');
 	}
 
-	const { env, ctx } = locals.runtime;
-
 	const turnstileToken = String(formData.get('cf-turnstile-response') ?? '');
 	const turnstileOk = await verifyTurnstile(
 		env.TURNSTILE_SECRET_KEY,
@@ -182,7 +181,7 @@ export const POST: APIRoute = async ({ request, redirect, locals }) => {
 		console.log(
 			`Sending RSVP confirmation email using key starting with "${env.RESEND_API_KEY.slice(0, 6)}…" (length ${env.RESEND_API_KEY.length})`,
 		);
-		ctx.waitUntil(
+		locals.cfContext.waitUntil(
 			sendConfirmationEmail(env.RESEND_API_KEY, email, { naam, aanwezig, aantalGasten }).catch((error) =>
 				console.error('Failed to send RSVP confirmation email', error),
 			),

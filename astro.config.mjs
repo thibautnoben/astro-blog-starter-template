@@ -9,9 +9,6 @@ export default defineConfig({
 	site: "https://example.com",
 	integrations: [sitemap()],
 	adapter: cloudflare({
-		platformProxy: {
-			enabled: true,
-		},
 		imageService: "compile",
 	}),
 });

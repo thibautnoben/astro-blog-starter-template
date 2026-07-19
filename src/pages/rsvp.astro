@@ -1,11 +1,12 @@
 ---
 export const prerender = false;
 
+import { env } from 'cloudflare:workers';
 import Layout from '../layouts/Layout.astro';
 import { CONTACT_EMAIL, RSVP_DEADLINE_LABEL } from '../consts';
 
 const status = Astro.url.searchParams.get('status');
-const turnstileSiteKey = Astro.locals.runtime.env.TURNSTILE_SITE_KEY;
+const turnstileSiteKey = env.TURNSTILE_SITE_KEY;
 ---
 
 <Layout title="RSVP" description={`Laat ons voor ${RSVP_DEADLINE_LABEL} weten of je erbij kan zijn.`}>
