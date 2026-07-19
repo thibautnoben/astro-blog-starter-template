@@ -2,6 +2,9 @@
 	"name": "kirsten-en-thibaut-website",
 	"compatibility_date": "2025-10-08",
 	"compatibility_flags": ["nodejs_compat"],
+	"vars": {
+		"TURNSTILE_SITE_KEY": "0x4AAAAAAD4p44SyuNbZkFwN"
+	},
 	"assets": {
 		"directory": "./dist",
 		"binding": "ASSETS"
