@@ -91,31 +91,8 @@ import {
 		border-radius: 0 0 12px 12px;
 	}
 	.hero {
-		position: relative;
 		text-align: center;
 		padding: 2em 0 3em;
-	}
-	.hero::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		pointer-events: none;
-		opacity: 0.35;
-		background-repeat: no-repeat;
-		background-image:
-			radial-gradient(circle, var(--accent) 3px, transparent 3px),
-			radial-gradient(circle, var(--gold) 2px, transparent 2px),
-			radial-gradient(circle, var(--accent) 2px, transparent 2px),
-			radial-gradient(circle, var(--gold) 3px, transparent 3px),
-			radial-gradient(circle, var(--accent) 2px, transparent 2px);
-		background-size: 12px 12px;
-		background-position:
-			6% 12%,
-			90% 8%,
-			94% 65%,
-			4% 78%,
-			80% 92%;
 	}
 	.hero h1 {
 		font-size: 3.5em;
@@ -123,12 +100,6 @@ import {
 	}
 	.title-heart {
 		font-size: 0.5em;
-	}
-	.title-heart-left {
-		transform: rotate(-12deg);
-	}
-	.title-heart-right {
-		transform: rotate(12deg);
 	}
 	.date-venue {
 		font-size: 1.1em;
