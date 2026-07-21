@@ -1,11 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Gallery from '../components/Gallery.astro';
+import HeartAccent from '../components/HeartAccent.astro';
 import { PARTNER_ONE, PARTNER_TWO } from '../consts';
 ---
 
 <Layout title="Foto's" description={`Foto's van ${PARTNER_ONE} & ${PARTNER_TWO}.`}>
-	<span class="eyebrow">Foto's</span>
+	<span class="eyebrow"><HeartAccent /> Foto's <HeartAccent /></span>
 	<h1>Onze foto's</h1>
 	<p>Een paar kiekjes van ons.</p>
 

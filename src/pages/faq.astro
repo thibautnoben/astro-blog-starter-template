@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import HeartAccent from '../components/HeartAccent.astro';
 import { CONTACT_EMAIL, RSVP_DEADLINE_LABEL, WEDDING_VENUE } from '../consts';
 
 const faqs = [
@@ -35,7 +36,7 @@ const faqs = [
 ---
 
 <Layout title="FAQ" description="Veelgestelde vragen over onze bruiloft.">
-	<span class="eyebrow">Veelgestelde vragen</span>
+	<span class="eyebrow"><HeartAccent /> Veelgestelde vragen <HeartAccent /></span>
 	<h1>FAQ</h1>
 
 	<dl class="faq-list">

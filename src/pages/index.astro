@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import HeartAccent from '../components/HeartAccent.astro';
 import heroImage from '../assets/images/hero.jpg';
 import {
 	PARTNER_ONE,
@@ -21,8 +22,12 @@ import {
 		class="hero-image"
 	/>
 	<section class="hero">
-		<span class="eyebrow">Wij trouwen</span>
-		<h1>{PARTNER_ONE} & {PARTNER_TWO}</h1>
+		<span class="eyebrow"><HeartAccent /> Wij trouwen <HeartAccent /></span>
+		<h1>
+			<HeartAccent class="title-heart title-heart-left" />
+			{PARTNER_ONE} & {PARTNER_TWO}
+			<HeartAccent class="title-heart title-heart-right" />
+		</h1>
 		<p class="date-venue">{WEDDING_DATE_LABEL} — {WEDDING_VENUE}</p>
 		<p>
 			Na jaren samen zetten we de volgende stap. We nodigen je van harte uit om deze dag samen met
@@ -88,16 +93,50 @@ import {
 		border-radius: 0 0 12px 12px;
 	}
 	.hero {
+		position: relative;
 		text-align: center;
 		padding: 2em 0 3em;
+	}
+	.hero::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		pointer-events: none;
+		opacity: 0.35;
+		background-repeat: no-repeat;
+		background-image:
+			radial-gradient(circle, var(--accent) 3px, transparent 3px),
+			radial-gradient(circle, var(--gold) 2px, transparent 2px),
+			radial-gradient(circle, var(--accent) 2px, transparent 2px),
+			radial-gradient(circle, var(--gold) 3px, transparent 3px),
+			radial-gradient(circle, var(--accent) 2px, transparent 2px);
+		background-size: 12px 12px;
+		background-position:
+			6% 12%,
+			90% 8%,
+			94% 65%,
+			4% 78%,
+			80% 92%;
 	}
 	.hero h1 {
 		font-size: 3.5em;
 		margin-bottom: 0.2em;
 	}
+	.title-heart {
+		font-size: 0.5em;
+	}
+	.title-heart-left {
+		transform: rotate(-12deg);
+	}
+	.title-heart-right {
+		transform: rotate(12deg);
+	}
 	.date-venue {
-		font-size: 1.25em;
-		color: rgb(var(--gray));
+		font-size: 1.1em;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		color: var(--accent-dark);
 		margin-bottom: 1.5em;
 	}
 	.cta {

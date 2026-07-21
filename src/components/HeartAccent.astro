@@ -1,0 +1,29 @@
+---
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+	class:list={['heart-accent', className]}
+	viewBox="0 0 24 24"
+	width="1em"
+	height="1em"
+	aria-hidden="true"
+	focusable="false"
+>
+	<path
+		fill="currentColor"
+		d="M12 21s-6.7-4.35-9.55-8.36C.6 10.2 1.13 6.6 4.1 4.9c2.2-1.26 4.9-.7 6.4 1.13L12 7.6l1.5-1.57c1.5-1.83 4.2-2.39 6.4-1.13 2.97 1.7 3.5 5.3 1.65 7.74C18.7 16.65 12 21 12 21z"
+	></path>
+</svg>
+
+<style>
+	.heart-accent {
+		display: inline-block;
+		color: var(--accent);
+		vertical-align: middle;
+	}
+</style>

@@ -3,6 +3,7 @@ export const prerender = false;
 
 import { env } from 'cloudflare:workers';
 import Layout from '../layouts/Layout.astro';
+import HeartAccent from '../components/HeartAccent.astro';
 import { CONTACT_EMAIL, RSVP_DEADLINE_LABEL } from '../consts';
 
 const status = Astro.url.searchParams.get('status');
@@ -10,7 +11,7 @@ const turnstileSiteKey = env.TURNSTILE_SITE_KEY;
 ---
 
 <Layout title="RSVP" description={`Laat ons voor ${RSVP_DEADLINE_LABEL} weten of je erbij kan zijn.`}>
-	<span class="eyebrow">RSVP</span>
+	<span class="eyebrow"><HeartAccent /> RSVP <HeartAccent /></span>
 	<h1>Doe je mee?</h1>
 	<p>
 		Laat ons voor <strong>{RSVP_DEADLINE_LABEL}</strong> weten of je erbij kan zijn. Heb je toch nog

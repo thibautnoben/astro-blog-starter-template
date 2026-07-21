@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import HeartAccent from '../components/HeartAccent.astro';
 import { WEDDING_CITY_HALL, WEDDING_DATE_LABEL, WEDDING_VENUE } from '../consts';
 
 const schedule = [
@@ -16,7 +17,7 @@ const schedule = [
 ---
 
 <Layout title="Programma" description={`Het programma van onze bruiloft op ${WEDDING_DATE_LABEL}.`}>
-	<span class="eyebrow">{WEDDING_DATE_LABEL}</span>
+	<span class="eyebrow"><HeartAccent /> {WEDDING_DATE_LABEL} <HeartAccent /></span>
 	<h1>Programma</h1>
 	<p>
 		Hier vind je een overzicht van de dag. Om 12:00 geven we elkaar het jawoord in {WEDDING_CITY_HALL}.
