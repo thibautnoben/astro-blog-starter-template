@@ -43,7 +43,16 @@ const turnstileSiteKey = env.TURNSTILE_SITE_KEY;
 
 		<div class="field">
 			<label for="email">E-mail*</label>
-			<input type="email" id="email" name="email" required maxlength="254" />
+			<input
+				type="email"
+				id="email"
+				name="email"
+				required
+				maxlength="254"
+				pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+				aria-describedby="email-error"
+			/>
+			<span id="email-error" class="field-error" hidden>Vul een geldig e-mailadres in.</span>
 		</div>
 
 		<fieldset class="field">
@@ -75,6 +84,23 @@ const turnstileSiteKey = env.TURNSTILE_SITE_KEY;
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
+<script>
+	const emailInput = document.querySelector<HTMLInputElement>('#email');
+	const emailError = document.querySelector<HTMLElement>('#email-error');
+
+	function validateEmail() {
+		if (!emailInput || !emailError) return;
+		emailInput.setCustomValidity('');
+		const isValid = emailInput.validity.valid;
+		emailInput.setCustomValidity(isValid ? '' : 'Vul een geldig e-mailadres in.');
+		emailError.hidden = isValid;
+		emailInput.setAttribute('aria-invalid', String(!isValid));
+	}
+
+	emailInput?.addEventListener('input', validateEmail);
+	emailInput?.addEventListener('blur', validateEmail);
+</script>
+
 <style>
 	.notice {
 		padding: 1em;
@@ -87,6 +113,10 @@ const turnstileSiteKey = env.TURNSTILE_SITE_KEY;
 	.notice-error {
 		background: rgba(178, 58, 58, 0.1);
 		color: #8a2c2c;
+	}
+	.field-error {
+		color: #8a2c2c;
+		font-size: 0.9em;
 	}
 	form {
 		margin-top: 2em;
@@ -132,6 +162,9 @@ const turnstileSiteKey = env.TURNSTILE_SITE_KEY;
 		border: 1px solid rgb(var(--gray-light));
 		border-radius: 8px;
 		color: rgb(var(--gray-dark));
+	}
+	input[aria-invalid='true'] {
+		border-color: #8a2c2c;
 	}
 	button {
 		align-self: flex-start;
